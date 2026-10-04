@@ -16,7 +16,11 @@ body {
     isolation: isolate;
 }
 
-/* Frost: the 48px portrait blown up and blurred, under a grey veil. */
+::selection {
+    background: #0e0e0e;
+    color: #d6d6d6;
+}
+
 body::before {
     content: "";
     position: fixed;
@@ -61,7 +65,6 @@ body::after {
     color: #0e0e0e;
 }
 
-/* Clipped so each letter can drop in from above. */
 .intro .letter {
     display: inline-block;
     overflow: hidden;
@@ -116,7 +119,6 @@ body::after {
     margin: 0;
 }
 
-/* portrait.webp has its alpha fade baked in, so no mask here. */
 .portrait img {
     display: block;
     width: 100%;
@@ -139,16 +141,49 @@ body::after {
     max-width: 34em;
 }
 
+/* Buttons */
+
+.button {
+    display: inline-block;
+    padding: 12px 22px;
+    border: 1px solid #0e0e0e;
+    color: #0e0e0e;
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.button:hover {
+    background: #0e0e0e;
+    color: #d6d6d6;
+}
+
+.button:focus-visible {
+    outline: 2px solid #0e0e0e;
+    outline-offset: 4px;
+}
+
+.about-text .button {
+    margin-top: 16px;
+}
+
+.site-foot .button {
+    margin-top: 40px;
+}
+
 /* Listening */
 
-.listening {
+.listening,
+.building,
+.setup {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 24px 128px;
     text-align: left;
 }
 
-.listening-head {
+.section-head {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -159,32 +194,93 @@ body::after {
     margin-bottom: 48px;
 }
 
-.listening-head .label {
+.section-head .label {
     margin: 0;
 }
 
-.lastfm-profile {
+.section-link {
     font-size: 1rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
 }
 
-.lastfm-profile,
-.lastfm a {
+.section-link,
+.lastfm a,
+.github a {
     color: inherit;
     text-decoration: none;
 }
 
-.lastfm-profile:hover,
-.lastfm a:hover {
+.section-link:hover,
+.lastfm a:hover,
+.github a:hover {
     text-decoration: underline;
     text-underline-offset: 4px;
 }
 
-.lastfm-profile:focus-visible,
-.lastfm a:focus-visible {
+.section-link:focus-visible,
+.lastfm a:focus-visible,
+.github a:focus-visible {
     outline: 2px solid #0e0e0e;
     outline-offset: 3px;
+}
+
+/* Setup */
+
+.setup p:not(.label) {
+    margin: 0;
+    max-width: 34em;
+    font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+    line-height: 1.55;
+}
+
+.setup a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #4a4a4a;
+}
+
+.setup a:hover {
+    text-decoration-color: #0e0e0e;
+}
+
+.setup a:focus-visible {
+    outline: 2px solid #0e0e0e;
+    outline-offset: 3px;
+}
+
+/* Repos */
+
+.repos {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.repos li {
+    padding: 16px 0;
+    border-bottom: 1px solid #2e2e2e;
+    max-width: 40em;
+}
+
+.repo-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+}
+
+.repo-meta {
+    font-size: 1rem;
+    font-style: italic;
+}
+
+.repo-desc {
+    margin: 6px 0 0;
+    font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+    max-width: 34em;
 }
 
 .lastfm-state {
@@ -284,7 +380,6 @@ body::after {
     font-style: italic;
 }
 
-/* Serif, not sans, so the figure keeps the page's voice. */
 .scrobbles {
     margin: 0;
     font-size: clamp(3rem, 6vw, 5.5rem);
@@ -330,7 +425,9 @@ body::after {
 }
 
 @media (max-width: 760px) {
-    .listening {
+    .listening,
+    .building,
+    .setup {
         padding-bottom: 80px;
     }
 

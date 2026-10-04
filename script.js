@@ -1,4 +1,3 @@
-// Split "This is" into letters so each can drop in on its own delay. Without JS the plain text stays.
 const intro = document.getElementById("intro");
 const text = intro.textContent.trim();
 const stagger = 0.07;
@@ -67,7 +66,11 @@ function timeAgo(unixSeconds) {
     const hours = Math.floor(minutes / 60);
     if (hours < 24) return `${hours} hour${hours === 1 ? "" : "s"} ago`;
     const days = Math.floor(hours / 24);
-    return `${days} day${days === 1 ? "" : "s"} ago`;
+    if (days < 30) return `${days} day${days === 1 ? "" : "s"} ago`;
+    const months = Math.floor(days / 30);
+    if (months < 12) return `${months} month${months === 1 ? "" : "s"} ago`;
+    const years = Math.floor(days / 365);
+    return `${years} year${years === 1 ? "" : "s"} ago`;
 }
 
 function el(tag, attrs = {}, children = []) {
@@ -80,21 +83,20 @@ function el(tag, attrs = {}, children = []) {
     return node;
 }
 
-// order restarts per block so delays don't grow across the whole section.
 function staggered(node, order) {
     node.classList.add("lf-item");
     node.style.setProperty("--i", String(order));
     return node;
 }
 
-function renderState(message, linkText, linkHref) {
-    lastfmRoot.replaceChildren();
+function renderState(root, message, linkText, linkHref) {
+    root.replaceChildren();
     const p = el("p", { class: "lastfm-state", text: message });
     if (linkText && linkHref) {
         p.appendChild(document.createTextNode(" "));
         p.appendChild(el("a", { href: linkHref, text: linkText }));
     }
-    lastfmRoot.appendChild(staggered(p, 0));
+    root.appendChild(staggered(p, 0));
     watchReveal(p);
 }
 
@@ -158,7 +160,7 @@ async function loadLastfm() {
     if (!lastfmRoot) return;
 
     if (!LASTFM_PROXY) {
-        renderState("Last.fm isn't connected yet.");
+        renderState(lastfmRoot, "Last.fm isn't connected yet.");
         return;
     }
 
@@ -174,7 +176,7 @@ async function loadLastfm() {
     const settled = [recent, artists, info, albums];
     if (settled.every((r) => r.status === "rejected")) {
         console.error(settled.map((r) => r.reason));
-        renderState("Last.fm isn't answering right now.", "Open the profile instead.", profile);
+        renderState(lastfmRoot, "Last.fm isn't answering right now.", "Open the profile instead.", profile);
         return;
     }
 
@@ -193,7 +195,7 @@ async function loadLastfm() {
     if (albumList.length) blocks.push(renderAlbums(albumList));
 
     if (!blocks.length) {
-        renderState("Nothing scrobbled yet.", "See the profile.", profile);
+        renderState(lastfmRoot, "Nothing scrobbled yet.", "See the profile.", profile);
         return;
     }
 
@@ -201,7 +203,52 @@ async function loadLastfm() {
     for (const node of lastfmRoot.querySelectorAll(".lf-item")) watchReveal(node);
 }
 
-// Shared observer: Last.fm nodes arrive after load and register themselves via watchReveal.
+const githubRoot = document.getElementById("github");
+const GITHUB_USER = "Splayer0";
+const REPOS = [
+    "Splayer0/Shaurya-Personal-Website",
+    "Splayer0/splayer.4plt.ch",
+    "Hogjects/Lufus",
+];
+
+function renderRepos(repos) {
+    const items = repos.map((repo, i) => {
+        const updated = `updated ${timeAgo(Date.parse(repo.pushed_at) / 1000)}`;
+        const meta = repo.language ? `${repo.language}, ${updated}` : updated;
+        const li = el("li", {}, [
+            el("div", { class: "repo-row" }, [
+                el("a", { href: repo.html_url, text: repo.name }),
+                el("span", { class: "repo-meta", text: meta }),
+            ]),
+        ]);
+        if (repo.description) li.appendChild(el("p", { class: "repo-desc", text: repo.description }));
+        return staggered(li, i);
+    });
+    return el("ul", { class: "repos" }, items);
+}
+
+async function loadGithub() {
+    if (!githubRoot) return;
+    const profile = `https://github.com/${GITHUB_USER}`;
+
+    const results = await Promise.allSettled(REPOS.map(async (fullName) => {
+        const res = await fetch(`https://api.github.com/repos/${fullName}`);
+        if (!res.ok) throw new Error(`GitHub ${fullName}: HTTP ${res.status}`);
+        return res.json();
+    }));
+
+    const repos = results.filter((r) => r.status === "fulfilled").map((r) => r.value);
+    for (const r of results) if (r.status === "rejected") console.error(r.reason);
+
+    if (!repos.length) {
+        renderState(githubRoot, "GitHub isn't answering right now.", "Open the profile instead.", profile);
+        return;
+    }
+
+    githubRoot.replaceChildren(renderRepos(repos));
+    for (const node of githubRoot.querySelectorAll(".lf-item")) watchReveal(node);
+}
+
 const revealObserver = "IntersectionObserver" in window
     ? new IntersectionObserver((entries) => {
         for (const entry of entries) {
@@ -230,6 +277,17 @@ const QUOTES = [
     { text: "Do not act as if you were going to live ten thousand years. Death hangs over you. While you live, while it is in your power, be good.", author: "Marcus Aurelius", work: "Meditations", ref: "4.17" },
     { text: "While we are postponing, life speeds by.", author: "Seneca", work: "Letters to Lucilius", ref: "1" },
     { text: "We suffer more often in imagination than in reality.", author: "Seneca", work: "Letters to Lucilius", ref: "13" },
+    { text: "Demand not that events should happen as you wish; but wish them to happen as they do happen, and you will go on well.", author: "Epictetus", work: "Enchiridion", ref: "8" },
+    { text: "Remember that you are an actor in a drama, of such a kind as the author pleases to make it.", author: "Epictetus", work: "Enchiridion", ref: "17" },
+    { text: "Be for the most part silent, or speak merely what is necessary, and in few words.", author: "Epictetus", work: "Enchiridion", ref: "33" },
+    { text: "No man loses any other life than this which he now lives, nor lives any other than this which he now loses.", author: "Marcus Aurelius", work: "Meditations", ref: "2.14" },
+    { text: "Nowhere, either with more quiet or more freedom from trouble, does a man retire than into his own soul.", author: "Marcus Aurelius", work: "Meditations", ref: "4.3" },
+    { text: "Do not disturb yourself by thinking of the whole of your life.", author: "Marcus Aurelius", work: "Meditations", ref: "8.36" },
+    { text: "If you are pained by any external thing, it is not this thing that disturbs you, but your own judgment about it. And it is in your power to wipe out this judgment now.", author: "Marcus Aurelius", work: "Meditations", ref: "8.47" },
+    { text: "He who does wrong does wrong against himself.", author: "Marcus Aurelius", work: "Meditations", ref: "9.4" },
+    { text: "No longer talk at all about the kind of man that a good man ought to be, but be such.", author: "Marcus Aurelius", work: "Meditations", ref: "10.16" },
+    { text: "It is not the man who has too little, but the man who craves more, that is poor.", author: "Seneca", work: "Letters to Lucilius", ref: "2" },
+    { text: "When a man does not know what harbour he is making for, no wind is the right wind.", author: "Seneca", work: "Letters to Lucilius", ref: "71" },
 ];
 
 function showQuote() {
@@ -237,11 +295,11 @@ function showQuote() {
     if (!block) return;
 
     let last = -1;
-    try { last = Number(localStorage.getItem("quote")); } catch { /* storage blocked */ }
+    try { last = Number(localStorage.getItem("quote")); } catch {}
 
     let index = Math.floor(Math.random() * QUOTES.length);
     if (index === last) index = (index + 1) % QUOTES.length;
-    try { localStorage.setItem("quote", String(index)); } catch { /* storage blocked */ }
+    try { localStorage.setItem("quote", String(index)); } catch {}
 
     const q = QUOTES[index];
     const cite = el("cite", { text: q.work });
@@ -251,4 +309,5 @@ function showQuote() {
 }
 
 showQuote();
+loadGithub();
 loadLastfm();
