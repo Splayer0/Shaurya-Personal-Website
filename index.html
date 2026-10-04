@@ -1,97 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shaurya's</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <title>Shaurya Singh</title>
+    <meta name="description" content="Seventeen, from India, and mostly busy learning software development.">
+    <link rel="icon" href="favicon.png" type="image/png" sizes="64x64">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shauryasingh.is-a.dev/">
+    <meta property="og:title" content="Shaurya Singh">
+    <meta property="og:description" content="Seventeen, from India, and mostly busy learning software development.">
+    <meta property="og:image" content="https://shauryasingh.is-a.dev/og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="This is Shaurya Singh, beside a black and white portrait">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#858585">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="sided-prof">
-        <div style="position: relative; display: inline-block; margin-bottom: 15px;">
-            <img id="avatar" src="" alt="Avatar" style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid #d4b06c;">
-            <div id="status-dot" style="position: absolute; bottom: 8px; right: 8px; width: 18px; height: 18px; border-radius: 50%; border: 3px solid #121212; background-color: #747f8d;"></div>
-        </div>
-        <h1>Shaurya Singh</h1>
-    </div>
-    <div class="main">
-        <div class="left">
-            <div id="profile" style="margin-top: 28px; text-align: center; opacity: 0; transition: opacity 0.5s;" class="profile">
-                <div style="border: 1px solid #d4b06c33; border-radius: 15px; padding: 20px; background-color: #1a1a1a; min-width: 300px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-                    <div id="username" onclick="copyDiscord()" title="Click to copy username" style="font-size: 1.3rem; font-weight: bold; color: #d4b06c; cursor: pointer; transition: opacity 0.2s;">
-                        loading...
-                    </div>
-                    <div id="copy-hint" style="font-size: 0.7rem; color: #43b581; opacity: 0; transition: opacity 0.3s;">Copied to clipboard!</div>
+    <header class="hero">
+        <p class="intro" id="intro">This is</p>
+        <div class="rule" aria-hidden="true"></div>
+        <h1 class="name">Shaurya Singh</h1>
+    </header>
 
-                    <div id="custom-status" style="font-style: italic; color: #b59a5b; margin-top: 5px; font-size: 0.85rem; min-height: 1em;"></div>
-                    <hr style="border: 0; border-top: 1px solid #333; margin: 15px 0;">
-                    <div id="activity" style="font-size: 0.85rem; margin-bottom: 10px; display: none;">
-                        <div style="text-transform: uppercase; font-size: 0.65rem; color: #888; margin-bottom: 4px;">Currently Doing</div>
-                        <div id="activity-detail" style="color: #e0e0e0;"></div>
-                    </div>
-                    <div id="spotify" style="font-size: 0.85rem; color: #1DB954; display: none;">
-                        <span style="font-size: 1.1rem;">♫</span> <span id="track-name"></span>
-                    </div>
-                    <div id="chilling" style="font-size: 0.85rem; color: #555;">Just vibing</div>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="links" style="display: flex; flex-direction: column; gap: 12px; margin-top: 1px; align-items: center;">
-                    <a href="https://reddit.com/u/splayer_28410" target="_blank" class="site-link">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/reddit.svg" alt="Reddit"> Reddit
-                    </a>
-                    <a href="https://bsky.app/profile/splayer1.bsky.social" target="_blank" class="site-link">
-                        <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/bluesky.svg" alt="Bluesky"> Bluesky
-                    </a>
-                    <a href="https://x.com/Splayer_1" target="_blank" class="site-link">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg" alt="X"> X/Twitter
-                    </a>
-                    <a href="https://discord.com/users/799248479586615316" target="_blank" class="site-link">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord"> Discord
-                    </a>
-                    <a href="https://github.com/Splayer0" target="_blank" class="site-link">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" alt="GitHub"> Github
-                    </a>
-                    <a href="https://youtube.com/@splayer0" target="_blank" class="site-link">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube"> Youtube
-                    </a>
-                    <a href="https://t.me/Splayer0" target="_blank" class="site-link">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/telegram.svg" alt="Telegram"> Telegram
-                    </a>
-                </div>
-            </div>
+    <section class="about" aria-labelledby="about-title">
+        <figure class="portrait reveal">
+            <img src="portrait.webp" alt="Black and white portrait of Shaurya Singh, looking off to the side" width="1200" height="1200">
+        </figure>
+        <div class="about-text reveal">
+            <p class="label" id="about-title">Who I am</p>
+            <p>Seventeen, from India, and mostly busy learning software development. I like building new projects from scratch and trading ideas with people who care about the same things.</p>
+            <p>I use Void Linux, btw.</p>
         </div>
-        <div class="right">
-            <div class="about-container" style="margin-top: 30px; display: flex; justify-content: center; width: 100%; padding: 0 20px; box-sizing: border-box;">
-                <div style="border: 1px solid #d4b06c33; border-radius: 15px; padding: 25px; background-color: #1a1a1a; max-width: 500px; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.5); text-align: left;">
-                    <h2 style="margin-top: 0; color: #d4b06c; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 10px;">
-                        About Me
-                    </h2>
-                    <div style="color: #b59a5b; line-height: 1.6; font-size: 0.95rem;">
-                        <p>Hi, I'm an <strong>Indian</strong> <strong>Hindu</strong> and a <strong>Tech Enthusiast</strong></p>
-                        <p>I am also a <strong>Linux enjoyer</strong> who loves Open Sourced software</p>
-                        <ul style="list-style-type: '→ '; padding-left: 20px; color: #d4b06c88;">
-                            <li>Current Goal: getting a good college</li>
-                            <li>OS: Bedrock Linux with Void and Arch strata</li>
-                            <li>Age: [REDACTED]</li>
-                            <li>Coordinates: 37°14'16.9"N 115°48'53.1"W</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </section>
 
-    </div>
-    <footer style="margin-top: 50px; color: #d4b06c44; font-size: 0.7rem; letter-spacing: 1px;">
-        ∆ 2026 // BUILT WITH ❤️ ∆
+    <section class="listening" aria-labelledby="listening-title">
+        <div class="listening-head">
+            <p class="label lf-item" id="listening-title" style="--i: 0">Listening</p>
+            <a class="lastfm-profile lf-item" style="--i: 1" href="https://www.last.fm/user/splayer_">splayer_ on last.fm</a>
+        </div>
+        <div class="lastfm" id="lastfm" aria-live="polite">
+            <p class="lastfm-state lf-item" style="--i: 2">Fetching from Last.fm</p>
+        </div>
+    </section>
+
+    <footer class="site-foot reveal">
+        <blockquote id="quote">
+            <p>Some things are in our control and others not.</p>
+            <footer>Epictetus, <cite>Enchiridion</cite> 1</footer>
+        </blockquote>
     </footer>
+
     <script src="script.js"></script>
-    <script data-goatcounter="https://splayer.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-
 </body>
-
 </html>
